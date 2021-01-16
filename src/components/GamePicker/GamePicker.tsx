@@ -8,6 +8,7 @@ const GamePicker: React.FunctionComponent = () => {
   const [tokunan, setTokunan] = useState(false);
   const [houtou, setHoutou] = useState(false);
   const [hounan, setHounan] = useState(true);
+
   const updateFourPlayers = () => setFourPlayers(!fourPlayers);
   const updateThreePlayers = () => setThreePlayers(!threePlayers);
   const updateTokutou = () => setTokutou(!tokutou);

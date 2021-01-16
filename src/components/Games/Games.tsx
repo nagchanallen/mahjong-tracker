@@ -1,13 +1,21 @@
 import React from 'react';
 import Game from './Game/Game';
+import './Games.css';
 
 const Games: React.FC = () => {
   return (
-    <React.Fragment>
+    <div className="scrollable">
       <Game />
       <Game />
       <Game />
-    </React.Fragment>
+      <Game />
+      <Game />
+      <Game />
+      <Game />
+      <Game />
+      <Game />
+      <Game />
+    </div>
   );
 };
 
