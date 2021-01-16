@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Checkbox from './UI/Checkbox';
+import Checkbox from '../UI/Checkbox';
 
 const GamePicker: React.FunctionComponent = () => {
   const [fourPlayers, setFourPlayers] = useState(true);
