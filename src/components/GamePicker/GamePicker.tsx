@@ -16,7 +16,7 @@ const GamePicker: React.FunctionComponent = () => {
   const updateHounan = () => setHounan(!hounan);
 
   return (
-    <React.Fragment>
+    <div>
       <div>
         <Checkbox
           name="fourplayer"
@@ -57,7 +57,7 @@ const GamePicker: React.FunctionComponent = () => {
           onChange={updateHounan}
         />
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
