@@ -2,7 +2,7 @@
   "name": "mahjong-tracker",
   "productName": "mahjong-tracker",
   "version": "1.0.0",
-  "description": "A tool for tracking Tenhou game",
+  "description": "A cross-platform desktop application for tracking Tenhou games",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
