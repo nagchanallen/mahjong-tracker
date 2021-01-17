@@ -11,7 +11,7 @@ const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 800,
-    width: 500,
+    width: 450,
   });
   mainWindow.removeMenu();
 

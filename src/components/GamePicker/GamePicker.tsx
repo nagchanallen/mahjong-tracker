@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Checkbox from '../UI/Checkbox';
+import './GamePicker.css';
 
 const GamePicker: React.FunctionComponent = () => {
   const [fourPlayers, setFourPlayers] = useState(true);
@@ -17,7 +18,7 @@ const GamePicker: React.FunctionComponent = () => {
   const updateHounan = () => setHounan(!hounan);
 
   return (
-    <div>
+    <div className="gamePickerBox">
       <div>
         <Checkbox
           name="fourplayer"
