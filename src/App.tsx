@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-const dan = [
+const danMap = [
   '新人',
   '９級',
   '８級',
@@ -37,35 +37,44 @@ const dan = [
   '天鳳位',
 ];
 
+interface Player {
+  name: string;
+  dan: string;
+  rate: number;
+}
+
+class Game {
+  players: Player[] = [];
+  constructor(link: string, time: string, gameType: string) {}
+
+  addPlayer(playerObj: Player) {
+    this.players.push(playerObj);
+  }
+}
+
 const App: React.FC = () => {
-  const isFirstRendered = useRef(true);
-  const [gameList, setGameList] = useState([]);
+  const isFirstRendered = useRef<Boolean>(true);
+  const [gameList, setGameList] = useState<Game[]>(null);
 
   if (isFirstRendered.current) {
     window.sw = (gameStrings: string[]) => {
       const games = gameStrings.map((string) => {
-        const game = string.split(',');
-
-        // 0 for linkcode, 1 not useful, 2 for time, 3 for game type
-        const type = parseInt(game[3]);
+        const gameData = string.split(',');
+        const gameType = gameData[3];
+        const game = new Game(gameData[0], gameData[2], gameType);
         // game[3] = (type & 0x0010 ? '三' : '四') + '般上特鳳若銀琥孔'.substr();
-        // assending order for eachplayer (3 data for each player): name, dan, rate
-        // player 1
-        game[4] = decodeURIComponent(window.Base64.decode(game[4]));
-        game[5] = dan[parseInt(game[5])];
-        game[6] = Math.floor(parseInt(game[6])).toString();
-        // player 2
-        game[7] = decodeURIComponent(window.Base64.decode(game[7]));
-        game[8] = dan[parseInt(game[8])];
-        game[9] = Math.floor(parseInt(game[9])).toString();
-        // player 3
-        game[10] = decodeURIComponent(window.Base64.decode(game[10]));
-        game[11] = dan[parseInt(game[11])];
-        game[12] = Math.floor(parseInt(game[12])).toString();
-        // player 4
-        game[13] = decodeURIComponent(window.Base64.decode(game[13]));
-        game[14] = dan[parseInt(game[14])];
-        game[15] = Math.floor(parseInt(game[15])).toString();
+        for (let i = 1; i <= 4; ++i) {
+          const playerName = decodeURIComponent(
+            window.Base64.decode(gameData[3 * i + 1])
+          );
+          const playerDan = danMap[parseInt(gameData[3 * i + 2])];
+          const playerRate = Math.floor(parseInt(gameData[3 * i + 3]));
+          game.addPlayer({
+            name: playerName,
+            dan: playerDan,
+            rate: playerRate,
+          });
+        }
         return game;
       });
       setGameList(games);
@@ -79,9 +88,9 @@ const App: React.FC = () => {
 
   return (
     <div>
-      {gameList.map((e) => (
+      {/* {gameList.map((e) => (
         <div>{e}</div>
-      ))}
+      ))} */}
       <Helmet>
         <script src="https://tenhou.net/lib/base64.js" type="text/javascript" />
         <script src="https://mjv.jp/0/wg/0.js" type="text/javascript" />
