@@ -9,16 +9,20 @@ const Game: React.FC = () => {
         <div className="col-6">観戦</div>
       </div>
       <div className="row">
-        <div className="col-3">あいうえおかきく</div>
-        <div className="col-3">七段R2000</div>
-        <div className="col-3">あいうえ</div>
-        <div className="col-3">七段R2000</div>
+        <div className="col-6">あいうえおかきく</div>
+        <div className="col-6">七段R2000</div>
       </div>
       <div className="row">
-        <div className="col-3">あいうえおか</div>
-        <div className="col-3">七段R2000</div>
-        <div className="col-3">あい</div>
-        <div className="col-3">七段R2000</div>
+        <div className="col-6">あいうえ</div>
+        <div className="col-6">七段R2000</div>
+      </div>
+      <div className="row">
+        <div className="col-6">あいうえおか</div>
+        <div className="col-6">七段R2000</div>
+      </div>
+      <div className="row">
+        <div className="col-6">あい</div>
+        <div className="col-6">七段R2000</div>
       </div>
     </div>
   );
