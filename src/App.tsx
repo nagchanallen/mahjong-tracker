@@ -3,52 +3,15 @@ import { useEffect, useRef, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { Helmet } from 'react-helmet';
 import GamePicker from './components/GamePicker/GamePicker';
-import Games from './components/Games/Games';
+import GameBoards from './components/GameBoards/GameBoards';
+import { danMap } from './utils/maps';
+import { Game } from './models/Game';
 import './App.css';
 
 declare global {
   interface Window {
     sw: any;
     Base64: any;
-  }
-}
-
-const danMap = [
-  '新人',
-  '９級',
-  '８級',
-  '７級',
-  '６級',
-  '５級',
-  '４級',
-  '３級',
-  '２級',
-  '１級',
-  '初段',
-  '二段',
-  '三段',
-  '四段',
-  '五段',
-  '六段',
-  '七段',
-  '八段',
-  '九段',
-  '十段',
-  '天鳳位',
-];
-
-interface Player {
-  name: string;
-  dan: string;
-  rate: number;
-}
-
-class Game {
-  players: Player[] = [];
-  constructor(link: string, time: string, gameType: string) {}
-
-  addPlayer(playerObj: Player) {
-    this.players.push(playerObj);
   }
 }
 
@@ -60,8 +23,8 @@ const App: React.FC = () => {
     window.sw = (gameStrings: string[]) => {
       const games = gameStrings.map((string) => {
         const gameData = string.split(',');
-        const gameType = gameData[3];
-        const game = new Game(gameData[0], gameData[2], gameType);
+        const gameName = gameData[3];
+        const game = new Game(gameData[0], gameData[2], gameName);
         // game[3] = (type & 0x0010 ? '三' : '四') + '般上特鳳若銀琥孔'.substr();
         for (let i = 1; i <= 4; ++i) {
           const playerName = decodeURIComponent(
@@ -88,9 +51,6 @@ const App: React.FC = () => {
 
   return (
     <div>
-      {/* {gameList.map((e) => (
-        <div>{e}</div>
-      ))} */}
       <Helmet>
         <script src="https://tenhou.net/lib/base64.js" type="text/javascript" />
         <script src="https://mjv.jp/0/wg/0.js" type="text/javascript" />
@@ -98,9 +58,11 @@ const App: React.FC = () => {
       <div>
         <GamePicker />
       </div>
-      <div className="window">
-        <Games />
-      </div>
+      {gameList ? (
+        <div className="window">
+          <GameBoards gameList={gameList} />
+        </div>
+      ) : null}
     </div>
   );
 };
