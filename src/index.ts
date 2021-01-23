@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, shell } from 'electron';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -17,6 +17,11 @@ const createWindow = (): void => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+  // mainWindow.webContents.on('new-window', function (event, url) {
+  //   event.preventDefault();
+  //   shell.openExternal(url);
+  // });
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
