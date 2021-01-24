@@ -21,24 +21,14 @@ const GameBoard: React.FC<Props> = (props) => {
           </a>
         </div>
       </div>
-      <div className="row">
-        <div className="col-6">{props.players[0].name}</div>
-        <div className="col-6">{`${props.players[0].dan} R${props.players[0].rate}`}</div>
-      </div>
-      <div className="row">
-        <div className="col-6">{props.players[1].name}</div>
-        <div className="col-6">{`${props.players[1].dan} R${props.players[1].rate}`}</div>
-      </div>
-      <div className="row">
-        <div className="col-6">{props.players[2].name}</div>
-        <div className="col-6">{`${props.players[2].dan} R${props.players[2].rate}`}</div>
-      </div>
-      {props.players[3].name ? (
-        <div className="row">
-          <div className="col-6">{props.players[3].name}</div>
-          <div className="col-6">{`${props.players[3].dan} R${props.players[3].rate}`}</div>
-        </div>
-      ) : null}
+      {props.players.map((player) => {
+        return (
+          <div className="row" key={player.name}>
+            <div className="col-6">{player.name}</div>
+            <div className="col-6">{`${player.dan} R${player.rate}`}</div>
+          </div>
+        );
+      })}
     </div>
   );
 };

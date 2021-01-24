@@ -27,6 +27,9 @@ const App: React.FC = () => {
         const game = new Game(gameData[0], gameData[2], gameName);
         // game[3] = (type & 0x0010 ? '三' : '四') + '般上特鳳若銀琥孔'.substr();
         for (let i = 1; i <= 4; ++i) {
+          if (i === 4 && gameName === '57') {
+            break;
+          }
           const playerName = decodeURIComponent(
             window.Base64.decode(gameData[3 * i + 1])
           );
