@@ -93,9 +93,13 @@ const App: React.FC = () => {
           type="text/javascript"
         />
       </Helmet>
-      <button onClick={gameListUpdate}>更新</button>
-      <div>
-        <GamePicker />
+      <div className="row">
+        <div className="col-7">
+          <GamePicker />
+        </div>
+        <div className="col-5">
+          <button onClick={gameListUpdate}>更新</button>
+        </div>
       </div>
       {gameList ? (
         <div className="window">
