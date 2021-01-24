@@ -16,6 +16,17 @@ declare global {
 }
 
 const App: React.FC = () => {
+  const gameListUpdate = () => {
+    const gameDataTag = document.getElementById('gameData');
+    const gameDataDecoderTag = document.getElementById('gameDataDecoder');
+    gameDataTag.parentNode.removeChild(gameDataTag);
+    const newGameDataTag = document.createElement('script');
+    newGameDataTag.setAttribute('id', 'gameData');
+    newGameDataTag.setAttribute('type', 'text/javascript');
+    newGameDataTag.setAttribute('src', 'https://mjv.jp/0/wg/0.js');
+    gameDataDecoderTag.parentNode.appendChild(newGameDataTag);
+  };
+
   const isFirstRendered = useRef<Boolean>(true);
   const [gameList, setGameList] = useState<Game[]>(null);
 
@@ -24,6 +35,7 @@ const App: React.FC = () => {
       const games = gameStrings.map((string) => {
         const gameData = string.split(',');
         const gameType = parseInt(gameData[3]);
+
         // The code below has been modified from the original code which comes from tenhou official page. //
         const gameName =
           (gameType & 0x0010 ? '三' : '四') +
@@ -70,9 +82,18 @@ const App: React.FC = () => {
   return (
     <div>
       <Helmet>
-        <script src="https://tenhou.net/lib/base64.js" type="text/javascript" />
-        <script src="https://mjv.jp/0/wg/0.js" type="text/javascript" />
+        <script
+          id="gameDataDecoder"
+          src="https://tenhou.net/lib/base64.js"
+          type="text/javascript"
+        />
+        <script
+          id="gameData"
+          src="https://mjv.jp/0/wg/0.js"
+          type="text/javascript"
+        />
       </Helmet>
+      <button onClick={gameListUpdate}>更新</button>
       <div>
         <GamePicker />
       </div>
