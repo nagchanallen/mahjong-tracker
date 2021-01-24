@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { Helmet } from 'react-helmet';
+import { Game } from './models/Game';
+import * as gameNameMap from './utils/maps';
 import GamePicker from './components/GamePicker/GamePicker';
 import GameBoards from './components/GameBoards/GameBoards';
-import * as gameNameMap from './utils/maps';
-import { Game } from './models/Game';
 import './App.css';
 
 declare global {
@@ -16,6 +15,9 @@ declare global {
 }
 
 const App: React.FC = () => {
+  const isFirstRendered = useRef<Boolean>(true);
+  const [gameList, setGameList] = useState<Game[]>(null);
+
   const gameListUpdate = () => {
     const gameDataTag = document.getElementById('gameData');
     const gameDataDecoderTag = document.getElementById('gameDataDecoder');
@@ -27,15 +29,11 @@ const App: React.FC = () => {
     gameDataDecoderTag.parentNode.appendChild(newGameDataTag);
   };
 
-  const isFirstRendered = useRef<Boolean>(true);
-  const [gameList, setGameList] = useState<Game[]>(null);
-
   if (isFirstRendered.current) {
     window.sw = (gameStrings: string[]) => {
       const games = gameStrings.map((string) => {
         const gameData = string.split(',');
         const gameType = parseInt(gameData[3]);
-
         // The code below has been modified from the original code which comes from tenhou official page. //
         const gameName =
           (gameType & 0x0010 ? '三' : '四') +
@@ -53,6 +51,7 @@ const App: React.FC = () => {
         // The code above has been modified from the original code which comes from tenhou official page. //
 
         const game = new Game(gameData[0], gameData[2], gameName);
+
         for (let i = 1; i <= 4; ++i) {
           if (i === 4 && gameName[0] === '三') {
             break;
@@ -68,6 +67,7 @@ const App: React.FC = () => {
             rate: playerRate,
           });
         }
+
         return game;
       });
       setGameList(games);
@@ -80,7 +80,7 @@ const App: React.FC = () => {
   }, [gameList]);
 
   return (
-    <div>
+    <div className="App">
       <Helmet>
         <script
           id="gameDataDecoder"
