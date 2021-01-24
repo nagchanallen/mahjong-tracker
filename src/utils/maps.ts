@@ -1,3 +1,5 @@
+// The code below has been modified from the original code which comes from tenhou official page.
+
 export const danMap = [
   '新人',
   '９級',
@@ -21,3 +23,13 @@ export const danMap = [
   '十段',
   '天鳳位',
 ];
+
+export const GT_TAKU = (w: number): number => {
+  return ((w & 0x0020) >> 4) | ((w & 0x0080) >> 7);
+};
+export const GT_ISDAN = (w: number): Boolean => {
+  return !(w & (0x0200 | 0x0400 | 0x0800));
+};
+export const GT_ISJANS = (w: number): Boolean => {
+  return (w & (0x0200 | 0x0400)) != 0;
+};
