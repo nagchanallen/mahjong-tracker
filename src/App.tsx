@@ -76,7 +76,14 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
+    const UpdateTimerId = setTimeout(() => {
+      gameListUpdate();
+      console.log('gameList is updated.');
+    }, 60000);
     console.log(gameList);
+    return () => {
+      clearTimeout(UpdateTimerId);
+    };
   }, [gameList]);
 
   return (
