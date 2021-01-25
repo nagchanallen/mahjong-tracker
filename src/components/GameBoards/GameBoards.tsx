@@ -8,10 +8,6 @@ interface Props {
 }
 
 const GameBoards: React.FC<Props> = (props) => {
-  useEffect(() => {
-    console.log(props.gameList);
-  });
-
   return (
     <div className="scrollable">
       {props.gameList.map((game) => {

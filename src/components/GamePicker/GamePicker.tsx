@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Checkbox from '../UI/Checkbox';
 import './GamePicker.css';
 
-const GamePicker: React.FunctionComponent = () => {
+const GamePicker: React.FC = () => {
   const [fourPlayers, setFourPlayers] = useState(true);
   const [threePlayers, setThreePlayers] = useState(false);
   const [tokutou, setTokutou] = useState(false);
