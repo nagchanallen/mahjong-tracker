@@ -10,7 +10,7 @@ if (require('electron-squirrel-startup')) {
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 750,
+    height: 760,
     width: 400,
   });
   mainWindow.removeMenu();
