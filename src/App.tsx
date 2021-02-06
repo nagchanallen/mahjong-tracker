@@ -50,7 +50,11 @@ const App: React.FC = () => {
               (gameType & 0x0040 ? '速' : ''));
         // The code above has been modified from the original code which comes from tenhou official page. //
 
-        const game = new Game(gameData[0], gameData[2], gameName);
+        const game = new Game({
+          link: gameData[0],
+          time: gameData[2],
+          gameName: gameName,
+        });
 
         for (let i = 1; i <= 4; ++i) {
           if (i === 4 && gameName[0] === '三') {
