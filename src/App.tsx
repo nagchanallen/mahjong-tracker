@@ -17,6 +17,12 @@ declare global {
 const App: React.FC = () => {
   const isFirstRendered = useRef<Boolean>(true);
   const [gameList, setGameList] = useState<Game[]>(null);
+  const [isFourPlayers, setIsFourPlayers] = useState(true);
+  const [isThreePlayers, setIsThreePlayers] = useState(false);
+  const [isTokutou, setIsTokutou] = useState(false);
+  const [isTokunan, setIsTokunan] = useState(false);
+  const [isHoutou, setIsHoutou] = useState(false);
+  const [isHounan, setIsHounan] = useState(true);
 
   const gameListUpdate = () => {
     const gameDataTag = document.getElementById('gameData');
@@ -106,7 +112,20 @@ const App: React.FC = () => {
       </Helmet>
       <div className="row">
         <div className="col-7">
-          <GamePicker />
+          <GamePicker
+            isThreePlayers={isThreePlayers}
+            isFourPlayers={isFourPlayers}
+            isTokutou={isTokutou}
+            isTokunan={isTokunan}
+            isHoutou={isHoutou}
+            isHounan={isHounan}
+            setIsThreePlayers={setIsThreePlayers}
+            setIsFourPlayers={setIsFourPlayers}
+            setIsTokutou={setIsTokutou}
+            setIsTokunan={setIsTokunan}
+            setIsHoutou={setIsHoutou}
+            setIsHounan={setIsHounan}
+          />
         </div>
         <div className="col-5">
           <button onClick={gameListUpdate}>更新</button>
