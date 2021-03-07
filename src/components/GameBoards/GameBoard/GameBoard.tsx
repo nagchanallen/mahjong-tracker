@@ -6,17 +6,25 @@ interface Props {
   link: string;
   time: string;
   players: Player[];
+  gameTypeStates: {
+    isThreePlayers: boolean;
+    isFourPlayers: boolean;
+    isTokutou: boolean;
+    isTokunan: boolean;
+    isHoutou: boolean;
+    isHounan: boolean;
+  };
 }
 
-const GameBoard: React.FC<Props> = (props) => {
+const GameBoard: React.FC<Props> = ({ gameName, link, time, players }) => {
   return (
     <div className="container border">
       <div className="row border">
-        <div className="col-2">{props.time}</div>
-        <div className="col-4">{props.gameName}</div>
+        <div className="col-2">{time}</div>
+        <div className="col-4">{gameName}</div>
         <div className="col-6">
           <a
-            href={`https://tenhou.net/3/?wg=${props.link}`}
+            href={`https://tenhou.net/3/?wg=${link}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -24,7 +32,7 @@ const GameBoard: React.FC<Props> = (props) => {
           </a>
         </div>
       </div>
-      {props.players.map((player) => {
+      {players.map((player) => {
         return (
           <div className="row" key={player.name}>
             <div className="col-6">{player.name}</div>
