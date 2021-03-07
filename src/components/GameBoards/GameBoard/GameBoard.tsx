@@ -15,7 +15,11 @@ const GameBoard: React.FC<Props> = (props) => {
         <div className="col-2">{props.time}</div>
         <div className="col-4">{props.gameName}</div>
         <div className="col-6">
-          <a href={`https://tenhou.net/3/?wg=${props.link}`} target="_blank">
+          <a
+            href={`https://tenhou.net/3/?wg=${props.link}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             観戦
           </a>
         </div>
