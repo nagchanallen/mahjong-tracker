@@ -5,9 +5,17 @@ import './GameBoards.css';
 
 interface Props {
   gameList: Game[];
+  gameTypeStates: {
+    isThreePlayers: boolean;
+    isFourPlayers: boolean;
+    isTokutou: boolean;
+    isTokunan: boolean;
+    isHoutou: boolean;
+    isHounan: boolean;
+  };
 }
 
-const GameBoards: React.FC<Props> = ({ gameList }) => {
+const GameBoards: React.FC<Props> = ({ gameList, gameTypeStates }) => {
   return (
     <div className="scrollable">
       {gameList.map(({ link, gameName, players, time }) => {
@@ -18,6 +26,7 @@ const GameBoards: React.FC<Props> = ({ gameList }) => {
             link={link}
             time={time}
             players={players}
+            gameTypeStates={gameTypeStates}
           />
         );
       })}

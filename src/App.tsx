@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { Helmet } from 'react-helmet';
+import _ from 'lodash';
 import { Game } from './models/Game';
 import * as gameNameMap from './utils/maps';
 import GamePicker from './components/GamePicker/GamePicker';
@@ -17,6 +18,7 @@ declare global {
 const App: React.FC = () => {
   const isFirstRendered = useRef<boolean>(true);
   const [gameList, setGameList] = useState<Game[]>(null);
+  const [displayGameList, setDisplayGameList] = useState<Game[]>(null);
   const [isFourPlayers, setIsFourPlayers] = useState<boolean>(true);
   const [isThreePlayers, setIsThreePlayers] = useState<boolean>(false);
   const [isTokutou, setIsTokutou] = useState<boolean>(false);
@@ -88,13 +90,65 @@ const App: React.FC = () => {
   useEffect(() => {
     const UpdateTimerId = setTimeout(() => {
       gameListUpdate();
-      console.log('gameList is updated.');
     }, 60000);
-    console.log(gameList);
     return () => {
       clearTimeout(UpdateTimerId);
     };
   }, [gameList]);
+
+  useEffect(() => {
+    if (gameList !== null) {
+      const filteredGameList = displayGameListHandler(gameList);
+      setDisplayGameList(filteredGameList);
+    }
+  }, [
+    gameList,
+    isThreePlayers,
+    isFourPlayers,
+    isTokutou,
+    isTokunan,
+    isHoutou,
+    isHounan,
+  ]);
+
+  const displayGameListHandler = (games: Game[]): Game[] => {
+    if (!isThreePlayers) {
+      games = _.filter(games, ({ players }) => players.length !== 3);
+    }
+
+    if (!isFourPlayers) {
+      games = _.filter(games, ({ players }) => players.length !== 4);
+    }
+
+    if (!isTokutou) {
+      games = _.filter(
+        games,
+        ({ gameName }) => gameName.slice(1, 3) !== '特東'
+      );
+    }
+
+    if (!isTokunan) {
+      games = _.filter(
+        games,
+        ({ gameName }) => gameName.slice(1, 3) !== '特南'
+      );
+    }
+
+    if (!isHoutou) {
+      games = _.filter(
+        games,
+        ({ gameName }) => gameName.slice(1, 3) !== '鳳東'
+      );
+    }
+
+    if (!isHounan) {
+      games = _.filter(
+        games,
+        ({ gameName }) => gameName.slice(1, 3) !== '鳳南'
+      );
+    }
+    return games;
+  };
 
   return (
     <div className="App">
@@ -131,9 +185,19 @@ const App: React.FC = () => {
           <button onClick={gameListUpdate}>更新</button>
         </div>
       </div>
-      {gameList ? (
+      {displayGameList ? (
         <div className="window">
-          <GameBoards gameList={gameList} />
+          <GameBoards
+            gameList={displayGameList}
+            gameTypeStates={{
+              isThreePlayers: isThreePlayers,
+              isFourPlayers: isFourPlayers,
+              isTokutou: isTokutou,
+              isTokunan: isTokunan,
+              isHoutou: isHoutou,
+              isHounan: isHounan,
+            }}
+          />
         </div>
       ) : null}
     </div>
