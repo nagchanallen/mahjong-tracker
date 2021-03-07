@@ -7,17 +7,17 @@ interface Props {
   gameList: Game[];
 }
 
-const GameBoards: React.FC<Props> = (props) => {
+const GameBoards: React.FC<Props> = ({ gameList }) => {
   return (
     <div className="scrollable">
-      {props.gameList.map((game) => {
+      {gameList.map(({ link, gameName, players, time }) => {
         return (
           <GameBoard
-            key={game.link}
-            gameName={game.gameName}
-            link={game.link}
-            time={game.time}
-            players={game.players}
+            key={link}
+            gameName={gameName}
+            link={link}
+            time={time}
+            players={players}
           />
         );
       })}
