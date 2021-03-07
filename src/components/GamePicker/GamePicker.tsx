@@ -9,7 +9,6 @@ interface Props {
   isTokunan: boolean;
   isHoutou: boolean;
   isHounan: boolean;
-  // Todo: add types for setState Functions
   setIsThreePlayers: any;
   setIsFourPlayers: any;
   setIsTokutou: any;
@@ -18,28 +17,40 @@ interface Props {
   setIsHounan: any;
 }
 
-const GamePicker: React.FC<Props> = (props) => {
-  const updateFourPlayers = () => props.setIsFourPlayers(!props.isFourPlayers);
-  const updateThreePlayers = () =>
-    props.setIsThreePlayers(!props.isThreePlayers);
-  const updateTokutou = () => props.setIsTokutou(!props.isTokutou);
-  const updateTokunan = () => props.setIsTokunan(!props.isTokunan);
-  const updateHoutou = () => props.setIsHoutou(!props.isHoutou);
-  const updateHounan = () => props.setIsHounan(!props.isHounan);
+const GamePicker: React.FC<Props> = ({
+  isThreePlayers,
+  isFourPlayers,
+  isTokutou,
+  isTokunan,
+  isHoutou,
+  isHounan,
+  setIsThreePlayers,
+  setIsFourPlayers,
+  setIsTokutou,
+  setIsTokunan,
+  setIsHoutou,
+  setIsHounan,
+}) => {
+  const updateFourPlayers = () => setIsFourPlayers(!isFourPlayers);
+  const updateThreePlayers = () => setIsThreePlayers(!isThreePlayers);
+  const updateTokutou = () => setIsTokutou(!isTokutou);
+  const updateTokunan = () => setIsTokunan(!isTokunan);
+  const updateHoutou = () => setIsHoutou(!isHoutou);
+  const updateHounan = () => setIsHounan(!isHounan);
 
   return (
     <div className="gamePickerBox">
       <div>
         <Checkbox
-          name="fourplayer"
+          name="fourPlayer"
           label="四麻"
-          checked={props.isFourPlayers}
+          checked={isFourPlayers}
           onChange={updateFourPlayers}
         />
         <Checkbox
-          name="threeplayer"
+          name="threePlayer"
           label="三麻"
-          checked={props.isThreePlayers}
+          checked={isThreePlayers}
           onChange={updateThreePlayers}
         />
       </div>
@@ -47,25 +58,25 @@ const GamePicker: React.FC<Props> = (props) => {
         <Checkbox
           name="tokutou"
           label="特東"
-          checked={props.isTokutou}
+          checked={isTokutou}
           onChange={updateTokutou}
         />
         <Checkbox
           name="tokunan"
           label="特南"
-          checked={props.isTokunan}
+          checked={isTokunan}
           onChange={updateTokunan}
         />
         <Checkbox
           name="houtou"
           label="鳳東"
-          checked={props.isHoutou}
+          checked={isHoutou}
           onChange={updateHoutou}
         />
         <Checkbox
           name="hounan"
           label="鳳南"
-          checked={props.isHounan}
+          checked={isHounan}
           onChange={updateHounan}
         />
       </div>
