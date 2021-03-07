@@ -15,14 +15,14 @@ declare global {
 }
 
 const App: React.FC = () => {
-  const isFirstRendered = useRef<Boolean>(true);
+  const isFirstRendered = useRef<boolean>(true);
   const [gameList, setGameList] = useState<Game[]>(null);
-  const [isFourPlayers, setIsFourPlayers] = useState(true);
-  const [isThreePlayers, setIsThreePlayers] = useState(false);
-  const [isTokutou, setIsTokutou] = useState(false);
-  const [isTokunan, setIsTokunan] = useState(false);
-  const [isHoutou, setIsHoutou] = useState(false);
-  const [isHounan, setIsHounan] = useState(true);
+  const [isFourPlayers, setIsFourPlayers] = useState<boolean>(true);
+  const [isThreePlayers, setIsThreePlayers] = useState<boolean>(false);
+  const [isTokutou, setIsTokutou] = useState<boolean>(false);
+  const [isTokunan, setIsTokunan] = useState<boolean>(false);
+  const [isHoutou, setIsHoutou] = useState<boolean>(false);
+  const [isHounan, setIsHounan] = useState<boolean>(true);
 
   const gameListUpdate = () => {
     const gameDataTag = document.getElementById('gameData');
