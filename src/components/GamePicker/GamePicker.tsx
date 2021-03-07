@@ -9,12 +9,12 @@ interface Props {
   isTokunan: boolean;
   isHoutou: boolean;
   isHounan: boolean;
-  setIsThreePlayers: any;
-  setIsFourPlayers: any;
-  setIsTokutou: any;
-  setIsTokunan: any;
-  setIsHoutou: any;
-  setIsHounan: any;
+  setIsThreePlayers: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsFourPlayers: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTokutou: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTokunan: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsHoutou: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsHounan: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const GamePicker: React.FC<Props> = ({
