@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { ipcRenderer } from 'electron';
 import { hot } from 'react-hot-loader';
 import { Helmet } from 'react-helmet';
 import _ from 'lodash';
@@ -14,6 +15,8 @@ declare global {
     Base64: any;
   }
 }
+
+// Todo: add desktop notification
 
 const App: React.FC = () => {
   const isFirstRendered = useRef<boolean>(true);
@@ -183,6 +186,18 @@ const App: React.FC = () => {
         </div>
         <div className="col-5">
           <button onClick={gameListUpdate}>更新</button>
+          <button
+            onClick={() => {
+              ipcRenderer.send('request-mainprocess-action', [
+                '東家 R1984',
+                '南家 R1916',
+                '西家 R2021',
+                '北家 R2327',
+              ]);
+            }}
+          >
+            Notify
+          </button>
         </div>
       </div>
       {displayGameList ? (
