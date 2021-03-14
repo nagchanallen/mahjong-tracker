@@ -16,7 +16,12 @@ interface Props {
   };
 }
 
-const GameBoard: React.FC<Props> = ({ gameName, link, time, players }) => {
+const GameBoard: React.FC<Props> = ({
+  gameName,
+  link,
+  time,
+  players,
+}): React.ReactElement => {
   return (
     <div className="container border">
       <div className="row border">

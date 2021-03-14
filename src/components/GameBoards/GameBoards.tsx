@@ -15,7 +15,10 @@ interface Props {
   };
 }
 
-const GameBoards: React.FC<Props> = ({ gameList, gameTypeStates }) => {
+const GameBoards: React.FC<Props> = ({
+  gameList,
+  gameTypeStates,
+}): React.ReactElement => {
   return (
     <div className="scrollable">
       {gameList.map(({ link, gameName, players, time }) => {

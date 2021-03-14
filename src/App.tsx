@@ -18,7 +18,7 @@ declare global {
 
 // Todo: add desktop notification
 
-const App: React.FC = () => {
+const App: React.FC = (): React.ReactElement => {
   const isFirstRendered = useRef<boolean>(true);
   const [gameList, setGameList] = useState<Game[]>(null);
   const [displayGameList, setDisplayGameList] = useState<Game[]>(null);

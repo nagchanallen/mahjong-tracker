@@ -7,7 +7,7 @@ interface CheckBoxProps {
   onChange: () => void;
 }
 
-const Checkbox: React.FC<CheckBoxProps> = (props) => {
+const Checkbox: React.FC<CheckBoxProps> = (props): React.ReactElement => {
   return (
     <span>
       <input

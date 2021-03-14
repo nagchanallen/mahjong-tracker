@@ -30,7 +30,7 @@ const GamePicker: React.FC<Props> = ({
   setIsTokunan,
   setIsHoutou,
   setIsHounan,
-}) => {
+}): React.ReactElement => {
   const updateFourPlayers = () => setIsFourPlayers(!isFourPlayers);
   const updateThreePlayers = () => setIsThreePlayers(!isThreePlayers);
   const updateTokutou = () => setIsTokutou(!isTokutou);
