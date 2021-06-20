@@ -1,12 +1,21 @@
+// packages
 import React, { useEffect, useRef, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import { hot } from 'react-hot-loader';
 import { Helmet } from 'react-helmet';
 import _ from 'lodash';
-import { Game } from './models/Game';
-import * as gameNameMap from './utils/maps';
-import GamePicker from './components/GamePicker/GamePicker';
+
+// components
+import GameFilter from './components/GameFilter/GameFilter';
 import GameBoards from './components/GameBoards/GameBoards';
+
+// custom model
+import { Game } from './models/Game';
+
+// utils
+import * as gameNameMap from './utils/maps';
+
+// style
 import './App.css';
 
 declare global {
@@ -16,12 +25,23 @@ declare global {
   }
 }
 
-// Todo: add desktop notification
+// TODO: add desktop notification
+const fetchGameData = () => {
+  const gameDataTag = document.getElementById('gameData');
+  const gameDataDecoderTag = document.getElementById('gameDataDecoder');
+  gameDataTag.parentNode.removeChild(gameDataTag);
+  const newGameDataTag = document.createElement('script');
+  newGameDataTag.setAttribute('id', 'gameData');
+  newGameDataTag.setAttribute('type', 'text/javascript');
+  newGameDataTag.setAttribute('src', 'https://mjv.jp/0/wg/0.js');
+  gameDataDecoderTag.parentNode.appendChild(newGameDataTag);
+};
 
 const App: React.FC = (): React.ReactElement => {
   const isFirstRendered = useRef<boolean>(true);
   const [gameList, setGameList] = useState<Game[]>(null);
-  const [displayGameList, setDisplayGameList] = useState<Game[]>(null);
+  const [filteredGameList, setFilteredGameList] = useState<Game[]>(null);
+  // filter options
   const [isFourPlayers, setIsFourPlayers] = useState<boolean>(true);
   const [isThreePlayers, setIsThreePlayers] = useState<boolean>(false);
   const [isTokutou, setIsTokutou] = useState<boolean>(false);
@@ -29,18 +49,36 @@ const App: React.FC = (): React.ReactElement => {
   const [isHoutou, setIsHoutou] = useState<boolean>(false);
   const [isHounan, setIsHounan] = useState<boolean>(true);
 
-  const gameListUpdate = () => {
-    const gameDataTag = document.getElementById('gameData');
-    const gameDataDecoderTag = document.getElementById('gameDataDecoder');
-    gameDataTag.parentNode.removeChild(gameDataTag);
-    const newGameDataTag = document.createElement('script');
-    newGameDataTag.setAttribute('id', 'gameData');
-    newGameDataTag.setAttribute('type', 'text/javascript');
-    newGameDataTag.setAttribute('src', 'https://mjv.jp/0/wg/0.js');
-    gameDataDecoderTag.parentNode.appendChild(newGameDataTag);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchGameData();
+    }, 60000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [gameList]);
+
+  useEffect(() => {
+    if (gameList !== null) {
+      const filteredGameList = filterGames(gameList);
+      setFilteredGameList(filteredGameList);
+    }
+  }, [
+    gameList,
+    isThreePlayers,
+    isFourPlayers,
+    isTokutou,
+    isTokunan,
+    isHoutou,
+    isHounan,
+  ]);
+
+  const updateGameList = () => {
+    fetchGameData();
+    getGameList();
   };
 
-  if (isFirstRendered.current) {
+  const getGameList = () => {
     window.sw = (gameStrings: string[]) => {
       const games = gameStrings.map((string) => {
         const gameData = string.split(',');
@@ -87,34 +125,9 @@ const App: React.FC = (): React.ReactElement => {
       });
       setGameList(games);
     };
-    isFirstRendered.current = false;
-  }
+  };
 
-  useEffect(() => {
-    const UpdateTimerId = setTimeout(() => {
-      gameListUpdate();
-    }, 60000);
-    return () => {
-      clearTimeout(UpdateTimerId);
-    };
-  }, [gameList]);
-
-  useEffect(() => {
-    if (gameList !== null) {
-      const filteredGameList = displayGameListHandler(gameList);
-      setDisplayGameList(filteredGameList);
-    }
-  }, [
-    gameList,
-    isThreePlayers,
-    isFourPlayers,
-    isTokutou,
-    isTokunan,
-    isHoutou,
-    isHounan,
-  ]);
-
-  const displayGameListHandler = (games: Game[]): Game[] => {
+  const filterGames = (games: Game[]): Game[] => {
     if (!isThreePlayers) {
       games = _.filter(games, ({ players }) => players.length !== 3);
     }
@@ -153,6 +166,11 @@ const App: React.FC = (): React.ReactElement => {
     return games;
   };
 
+  if (isFirstRendered.current) {
+    getGameList();
+    isFirstRendered.current = false;
+  }
+
   return (
     <div className="App">
       <Helmet>
@@ -169,7 +187,7 @@ const App: React.FC = (): React.ReactElement => {
       </Helmet>
       <div className="row">
         <div className="col-7">
-          <GamePicker
+          <GameFilter
             isThreePlayers={isThreePlayers}
             isFourPlayers={isFourPlayers}
             isTokutou={isTokutou}
@@ -185,7 +203,7 @@ const App: React.FC = (): React.ReactElement => {
           />
         </div>
         <div className="col-5">
-          <button onClick={gameListUpdate}>更新</button>
+          <button onClick={updateGameList}>更新</button>
           <button
             onClick={() => {
               ipcRenderer.send('request-mainprocess-action', [
@@ -200,10 +218,10 @@ const App: React.FC = (): React.ReactElement => {
           </button>
         </div>
       </div>
-      {displayGameList ? (
+      {filteredGameList ? (
         <div className="window">
           <GameBoards
-            gameList={displayGameList}
+            gameList={filteredGameList}
             gameTypeStates={{
               isThreePlayers: isThreePlayers,
               isFourPlayers: isFourPlayers,

@@ -1,6 +1,6 @@
 import React from 'react';
 import Checkbox from '../UI/Checkbox';
-import './GamePicker.css';
+import './GameFilter.css';
 
 interface Props {
   isThreePlayers: boolean;
@@ -17,7 +17,7 @@ interface Props {
   setIsHounan: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const GamePicker: React.FC<Props> = ({
+const GameFilter: React.FC<Props> = ({
   isThreePlayers,
   isFourPlayers,
   isTokutou,
@@ -39,7 +39,7 @@ const GamePicker: React.FC<Props> = ({
   const updateHounan = () => setIsHounan(!isHounan);
 
   return (
-    <div className="gamePickerBox">
+    <div className="game-filter-box">
       <div>
         <Checkbox
           name="fourPlayer"
@@ -84,4 +84,4 @@ const GamePicker: React.FC<Props> = ({
   );
 };
 
-export default GamePicker;
+export default GameFilter;
