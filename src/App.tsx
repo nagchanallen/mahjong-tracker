@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // packages
 import React, { useEffect, useRef, useState } from 'react';
 import { ipcRenderer } from 'electron';

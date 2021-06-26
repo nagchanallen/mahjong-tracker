@@ -27,9 +27,9 @@ export const danMap = [
 export const GT_TAKU = (w: number): number => {
   return ((w & 0x0020) >> 4) | ((w & 0x0080) >> 7);
 };
-export const GT_ISDAN = (w: number): Boolean => {
+export const GT_ISDAN = (w: number): boolean => {
   return !(w & (0x0200 | 0x0400 | 0x0800));
 };
-export const GT_ISJANS = (w: number): Boolean => {
+export const GT_ISJANS = (w: number): boolean => {
   return (w & (0x0200 | 0x0400)) != 0;
 };

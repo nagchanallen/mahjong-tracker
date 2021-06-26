@@ -18,7 +18,7 @@ export class Game {
     this.gameName = gameData.gameName;
   }
 
-  addPlayer(playerObj: Player) {
+  addPlayer(playerObj: Player): void {
     this.players.push(playerObj);
   }
 }
