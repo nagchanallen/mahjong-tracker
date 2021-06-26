@@ -8,7 +8,7 @@ interface Props {
   gameTypeStates: {
     isThreePlayers: boolean;
     isFourPlayers: boolean;
-    isTokutou: Boolean;
+    isTokutou: boolean;
     isTokunan: boolean;
     isHoutou: boolean;
     isHounan: boolean;

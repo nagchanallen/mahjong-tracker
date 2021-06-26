@@ -30,6 +30,6 @@ export const GT_TAKU = (w: number): number => {
 export const GT_ISDAN = (w: number): boolean => {
   return !(w & (0x0200 | 0x0400 | 0x0800));
 };
-export const GT_ISJANS = (w: number): boolean => {
+export const GT_ISJANS = (w: number): Boolean => {
   return (w & (0x0200 | 0x0400)) != 0;
 };
