@@ -12,11 +12,6 @@
     "lint": "eslint --ext .ts .",
     "prepare": "husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn eslint --fix"
-    }
-  },
   "keywords": [],
   "author": {
     "name": "nagchanallen",
