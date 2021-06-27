@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { app, BrowserWindow } from 'electron';
+const fs = require('fs');
 const { Notification, ipcMain } = require('electron');
 declare const MAIN_WINDOW_WEBPACK_ENTRY: never;
 
@@ -66,6 +66,36 @@ const showNotification = (users: string[]) => {
   new Notification(notification).show();
 };
 
-ipcMain.on('request-mainprocess-action', (event: Request, users: string[]) => {
+const getFavouritePlayers = (): string[] => {
+  try {
+    const data = fs.readFileSync('favourite_players.txt', 'utf-8');
+    return data.split(' ');
+  } catch (err) {
+    return [];
+  }
+};
+
+const saveFavouritePlayers = (favouritePlayers: string[]): void => {
+  const data = favouritePlayers.join(' ');
+  try {
+    fs.writeFileSync('favourite_players.txt', data);
+  } catch (err) {
+    console.error('Cannot save favourite players file');
+  }
+};
+
+ipcMain.on('get-favourite-players', (event: any) => {
+  const favouritePlayers = getFavouritePlayers();
+  event.returnValue = favouritePlayers;
+});
+
+ipcMain.on(
+  'save-favourite-players',
+  (event: any, favouritePlayers: string[]) => {
+    saveFavouritePlayers(favouritePlayers);
+  }
+);
+
+ipcMain.on('request-mainprocess-action', (event: any, users: string[]) => {
   showNotification(users);
 });
