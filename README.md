@@ -11,7 +11,7 @@
 A cross-platform Electron desktop application for tracking Tenhou games.
 
 ## 必要条件　Prerequisite　
-- [NodeJS](https://nodejs.org/en/) (v14+) has been installed.
+- [NodeJS](https://nodejs.org/en/) (v16+) has been installed.
 - [Yarn](https://yarnpkg.com/) has been installed.
 
 ## セットアップ手順　Setup Procedures
