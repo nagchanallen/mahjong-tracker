@@ -5,6 +5,8 @@ import './GameBoards.css';
 
 interface Props {
   gameList: Game[];
+  favouritePlayers: string[];
+  setFavouritePlayers: React.Dispatch<React.SetStateAction<string[]>>;
   gameTypeStates: {
     isThreePlayers: boolean;
     isFourPlayers: boolean;
@@ -18,12 +20,16 @@ interface Props {
 const GameBoards: React.FC<Props> = ({
   gameList,
   gameTypeStates,
+  favouritePlayers,
+  setFavouritePlayers,
 }): React.ReactElement => {
   return (
     <div className="scrollable">
       {gameList.map(({ link, gameName, players, time }) => {
         return (
           <GameBoard
+            favouritePlayers={favouritePlayers}
+            setFavouritePlayers={setFavouritePlayers}
             key={link}
             gameName={gameName}
             link={link}

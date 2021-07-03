@@ -42,6 +42,7 @@ const App: React.FC = (): React.ReactElement => {
   const isFirstRendered = useRef<boolean>(true);
   const [gameList, setGameList] = useState<Game[]>(null);
   const [filteredGameList, setFilteredGameList] = useState<Game[]>(null);
+  const [favouritePlayers, setFavouritePlayers] = useState<string[]>([]);
   // filter options
   const [isFourPlayers, setIsFourPlayers] = useState<boolean>(true);
   const [isThreePlayers, setIsThreePlayers] = useState<boolean>(false);
@@ -73,6 +74,10 @@ const App: React.FC = (): React.ReactElement => {
     isHoutou,
     isHounan,
   ]);
+
+  useEffect(() => {
+    console.log(favouritePlayers);
+  }, [favouritePlayers]);
 
   const updateGameList = () => {
     fetchGameData();
@@ -169,6 +174,10 @@ const App: React.FC = (): React.ReactElement => {
 
   if (isFirstRendered.current) {
     getGameList();
+    const fetchedFavoutitePlayers = ipcRenderer.sendSync(
+      'get-favourite-players'
+    );
+    setFavouritePlayers(fetchedFavoutitePlayers);
     isFirstRendered.current = false;
   }
 
@@ -207,7 +216,7 @@ const App: React.FC = (): React.ReactElement => {
           <button onClick={updateGameList}>更新</button>
           <button
             onClick={() => {
-              ipcRenderer.send('request-mainprocess-action', [
+              ipcRenderer.send('show-notification', [
                 '東家 R1984',
                 '南家 R1916',
                 '西家 R2021',
@@ -223,6 +232,8 @@ const App: React.FC = (): React.ReactElement => {
         <div className="window">
           <GameBoards
             gameList={filteredGameList}
+            favouritePlayers={favouritePlayers}
+            setFavouritePlayers={setFavouritePlayers}
             gameTypeStates={{
               isThreePlayers: isThreePlayers,
               isFourPlayers: isFourPlayers,

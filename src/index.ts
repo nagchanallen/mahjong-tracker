@@ -61,7 +61,7 @@ app.on('activate', () => {
 const showNotification = (users: string[]) => {
   const notification = {
     title: '天鳳観戦情報',
-    body: users.join(' \n'),
+    body: users.join(' '),
   };
   new Notification(notification).show();
 };
@@ -92,10 +92,11 @@ ipcMain.on('get-favourite-players', (event: any) => {
 ipcMain.on(
   'save-favourite-players',
   (event: any, favouritePlayers: string[]) => {
+    // favouritePlayers.sort()
     saveFavouritePlayers(favouritePlayers);
   }
 );
 
-ipcMain.on('request-mainprocess-action', (event: any, users: string[]) => {
+ipcMain.on('show-notification', (event: any, users: string[]) => {
   showNotification(users);
 });
