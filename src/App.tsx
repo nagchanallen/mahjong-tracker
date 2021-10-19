@@ -43,13 +43,14 @@ const App: React.FC = (): React.ReactElement => {
   const [gameList, setGameList] = useState<Game[]>(null);
   const [filteredGameList, setFilteredGameList] = useState<Game[]>(null);
   const [favouritePlayers, setFavouritePlayers] = useState<string[]>([]);
-  // filter options
-  const [isFourPlayers, setIsFourPlayers] = useState<boolean>(true);
-  const [isThreePlayers, setIsThreePlayers] = useState<boolean>(false);
-  const [isTokutou, setIsTokutou] = useState<boolean>(false);
-  const [isTokunan, setIsTokunan] = useState<boolean>(false);
-  const [isHoutou, setIsHoutou] = useState<boolean>(false);
-  const [isHounan, setIsHounan] = useState<boolean>(true);
+  const [filterOptions, setFilterOptions] = useState({
+    fourPlayer: true,
+    threePlayer: true,
+    tokutou: false,
+    tokunan: false,
+    houtou: false,
+    hounan: true,
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -65,15 +66,7 @@ const App: React.FC = (): React.ReactElement => {
       const filteredGameList = filterGames(gameList);
       setFilteredGameList(filteredGameList);
     }
-  }, [
-    gameList,
-    isThreePlayers,
-    isFourPlayers,
-    isTokutou,
-    isTokunan,
-    isHoutou,
-    isHounan,
-  ]);
+  }, [gameList, filterOptions]);
 
   useEffect(() => {
     console.log(favouritePlayers);
@@ -134,36 +127,36 @@ const App: React.FC = (): React.ReactElement => {
   };
 
   const filterGames = (games: Game[]): Game[] => {
-    if (!isThreePlayers) {
+    if (!filterOptions.threePlayer) {
       games = _.filter(games, ({ players }) => players.length !== 3);
     }
 
-    if (!isFourPlayers) {
+    if (!filterOptions.fourPlayer) {
       games = _.filter(games, ({ players }) => players.length !== 4);
     }
 
-    if (!isTokutou) {
+    if (!filterOptions.tokutou) {
       games = _.filter(
         games,
         ({ gameName }) => gameName.slice(1, 3) !== '特東',
       );
     }
 
-    if (!isTokunan) {
+    if (!filterOptions.tokunan) {
       games = _.filter(
         games,
         ({ gameName }) => gameName.slice(1, 3) !== '特南',
       );
     }
 
-    if (!isHoutou) {
+    if (!filterOptions.houtou) {
       games = _.filter(
         games,
         ({ gameName }) => gameName.slice(1, 3) !== '鳳東',
       );
     }
 
-    if (!isHounan) {
+    if (!filterOptions.hounan) {
       games = _.filter(
         games,
         ({ gameName }) => gameName.slice(1, 3) !== '鳳南',
@@ -198,18 +191,8 @@ const App: React.FC = (): React.ReactElement => {
       <div className="row">
         <div className="col-7">
           <GameFilter
-            isThreePlayers={isThreePlayers}
-            isFourPlayers={isFourPlayers}
-            isTokutou={isTokutou}
-            isTokunan={isTokunan}
-            isHoutou={isHoutou}
-            isHounan={isHounan}
-            setIsThreePlayers={setIsThreePlayers}
-            setIsFourPlayers={setIsFourPlayers}
-            setIsTokutou={setIsTokutou}
-            setIsTokunan={setIsTokunan}
-            setIsHoutou={setIsHoutou}
-            setIsHounan={setIsHounan}
+            filterOptions={filterOptions}
+            setFilterOptions={setFilterOptions}
           />
         </div>
         <div className="col-5">
@@ -234,14 +217,7 @@ const App: React.FC = (): React.ReactElement => {
             gameList={filteredGameList}
             favouritePlayers={favouritePlayers}
             setFavouritePlayers={setFavouritePlayers}
-            gameTypeStates={{
-              isThreePlayers: isThreePlayers,
-              isFourPlayers: isFourPlayers,
-              isTokutou: isTokutou,
-              isTokunan: isTokunan,
-              isHoutou: isHoutou,
-              isHounan: isHounan,
-            }}
+            filterOptions={filterOptions}
           />
         </div>
       ) : null}

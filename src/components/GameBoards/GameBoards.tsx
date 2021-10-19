@@ -2,24 +2,18 @@ import React from 'react';
 import GameBoard from './GameBoard/GameBoard';
 import { Game } from '../../models/Game';
 import './GameBoards.css';
+import { FilterOptions } from '../../types/index';
 
 interface Props {
   gameList: Game[];
   favouritePlayers: string[];
   setFavouritePlayers: React.Dispatch<React.SetStateAction<string[]>>;
-  gameTypeStates: {
-    isThreePlayers: boolean;
-    isFourPlayers: boolean;
-    isTokutou: boolean;
-    isTokunan: boolean;
-    isHoutou: boolean;
-    isHounan: boolean;
-  };
+  filterOptions: FilterOptions;
 }
 
 const GameBoards: React.FC<Props> = ({
   gameList,
-  gameTypeStates,
+  filterOptions,
   favouritePlayers,
   setFavouritePlayers,
 }): React.ReactElement => {
@@ -35,7 +29,7 @@ const GameBoards: React.FC<Props> = ({
             link={link}
             time={time}
             players={players}
-            gameTypeStates={gameTypeStates}
+            filterOptions={filterOptions}
           />
         );
       })}

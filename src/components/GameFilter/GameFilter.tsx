@@ -1,83 +1,87 @@
 import React from 'react';
 import Checkbox from '../UI/Checkbox';
 import './GameFilter.css';
+import { FilterOptions } from '../../types';
 
 interface Props {
-  isThreePlayers: boolean;
-  isFourPlayers: boolean;
-  isTokutou: boolean;
-  isTokunan: boolean;
-  isHoutou: boolean;
-  isHounan: boolean;
-  setIsThreePlayers: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsFourPlayers: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsTokutou: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsTokunan: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsHoutou: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsHounan: React.Dispatch<React.SetStateAction<boolean>>;
+  filterOptions: FilterOptions;
+  setFilterOptions: React.Dispatch<React.SetStateAction<FilterOptions>>;
 }
 
 const GameFilter: React.FC<Props> = ({
-  isThreePlayers,
-  isFourPlayers,
-  isTokutou,
-  isTokunan,
-  isHoutou,
-  isHounan,
-  setIsThreePlayers,
-  setIsFourPlayers,
-  setIsTokutou,
-  setIsTokunan,
-  setIsHoutou,
-  setIsHounan,
+  filterOptions,
+  setFilterOptions,
 }): React.ReactElement => {
-  const updateFourPlayers = () => setIsFourPlayers(!isFourPlayers);
-  const updateThreePlayers = () => setIsThreePlayers(!isThreePlayers);
-  const updateTokutou = () => setIsTokutou(!isTokutou);
-  const updateTokunan = () => setIsTokunan(!isTokunan);
-  const updateHoutou = () => setIsHoutou(!isHoutou);
-  const updateHounan = () => setIsHounan(!isHounan);
-
   return (
     <div className="game-filter-box">
       <div>
         <Checkbox
           name="fourPlayer"
           label="四麻"
-          checked={isFourPlayers}
-          onChange={updateFourPlayers}
+          checked={filterOptions.fourPlayer}
+          onChange={() =>
+            setFilterOptions({
+              ...filterOptions,
+              fourPlayer: !filterOptions.fourPlayer,
+            })
+          }
         />
         <Checkbox
           name="threePlayer"
           label="三麻"
-          checked={isThreePlayers}
-          onChange={updateThreePlayers}
+          checked={filterOptions.threePlayer}
+          onChange={() =>
+            setFilterOptions({
+              ...filterOptions,
+              threePlayer: !filterOptions.threePlayer,
+            })
+          }
         />
       </div>
       <div>
         <Checkbox
           name="tokutou"
           label="特東"
-          checked={isTokutou}
-          onChange={updateTokutou}
+          checked={filterOptions.tokutou}
+          onChange={() =>
+            setFilterOptions({
+              ...filterOptions,
+              tokutou: !filterOptions.tokutou,
+            })
+          }
         />
         <Checkbox
           name="tokunan"
           label="特南"
-          checked={isTokunan}
-          onChange={updateTokunan}
+          checked={filterOptions.tokunan}
+          onChange={() =>
+            setFilterOptions({
+              ...filterOptions,
+              tokunan: !filterOptions.tokunan,
+            })
+          }
         />
         <Checkbox
           name="houtou"
           label="鳳東"
-          checked={isHoutou}
-          onChange={updateHoutou}
+          checked={filterOptions.houtou}
+          onChange={() =>
+            setFilterOptions({
+              ...filterOptions,
+              houtou: !filterOptions.houtou,
+            })
+          }
         />
         <Checkbox
           name="hounan"
           label="鳳南"
-          checked={isHounan}
-          onChange={updateHounan}
+          checked={filterOptions.hounan}
+          onChange={() =>
+            setFilterOptions({
+              ...filterOptions,
+              hounan: !filterOptions.hounan,
+            })
+          }
         />
       </div>
     </div>

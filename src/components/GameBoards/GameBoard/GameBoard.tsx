@@ -2,7 +2,7 @@ import React from 'react';
 import { ipcRenderer } from 'electron';
 import './GameBoard.css';
 import _ from 'lodash';
-import { Player } from '../../../types/';
+import { Player, FilterOptions } from '../../../types';
 
 interface Props {
   gameName: string;
@@ -11,14 +11,7 @@ interface Props {
   players: Player[];
   favouritePlayers: string[];
   setFavouritePlayers: React.Dispatch<React.SetStateAction<string[]>>;
-  gameTypeStates: {
-    isThreePlayers: boolean;
-    isFourPlayers: boolean;
-    isTokutou: boolean;
-    isTokunan: boolean;
-    isHoutou: boolean;
-    isHounan: boolean;
-  };
+  filterOptions: FilterOptions;
 }
 
 const GameBoard: React.FC<Props> = ({
