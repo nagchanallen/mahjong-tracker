@@ -94,7 +94,7 @@ ipcMain.on(
   (event: any, favouritePlayers: string[]) => {
     // favouritePlayers.sort()
     saveFavouritePlayers(favouritePlayers);
-  }
+  },
 );
 
 ipcMain.on('show-notification', (event: any, users: string[]) => {

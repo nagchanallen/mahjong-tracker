@@ -95,7 +95,7 @@ const App: React.FC = (): React.ReactElement => {
           '般上特鳳若銀琥孔'.substr(
             (gameNameMap.GT_ISJANS(gameType) ? 4 : 0) +
               gameNameMap.GT_TAKU(gameType),
-            1
+            1,
           ) +
           (gameType & 0x0008 ? '南' : '東') +
           (gameNameMap.GT_ISJANS(gameType)
@@ -116,7 +116,7 @@ const App: React.FC = (): React.ReactElement => {
             break;
           }
           const playerName = decodeURIComponent(
-            window.Base64.decode(gameData[3 * i + 1])
+            window.Base64.decode(gameData[3 * i + 1]),
           );
           const playerDan = gameNameMap.danMap[parseInt(gameData[3 * i + 2])];
           const playerRate = Math.floor(parseInt(gameData[3 * i + 3]));
@@ -145,28 +145,28 @@ const App: React.FC = (): React.ReactElement => {
     if (!isTokutou) {
       games = _.filter(
         games,
-        ({ gameName }) => gameName.slice(1, 3) !== '特東'
+        ({ gameName }) => gameName.slice(1, 3) !== '特東',
       );
     }
 
     if (!isTokunan) {
       games = _.filter(
         games,
-        ({ gameName }) => gameName.slice(1, 3) !== '特南'
+        ({ gameName }) => gameName.slice(1, 3) !== '特南',
       );
     }
 
     if (!isHoutou) {
       games = _.filter(
         games,
-        ({ gameName }) => gameName.slice(1, 3) !== '鳳東'
+        ({ gameName }) => gameName.slice(1, 3) !== '鳳東',
       );
     }
 
     if (!isHounan) {
       games = _.filter(
         games,
-        ({ gameName }) => gameName.slice(1, 3) !== '鳳南'
+        ({ gameName }) => gameName.slice(1, 3) !== '鳳南',
       );
     }
     return games;
@@ -175,7 +175,7 @@ const App: React.FC = (): React.ReactElement => {
   if (isFirstRendered.current) {
     getGameList();
     const fetchedFavoutitePlayers = ipcRenderer.sendSync(
-      'get-favourite-players'
+      'get-favourite-players',
     );
     setFavouritePlayers(fetchedFavoutitePlayers);
     isFirstRendered.current = false;

@@ -57,7 +57,7 @@ const GameBoard: React.FC<Props> = ({
               const newFavouritePlayers = _.cloneDeep(favouritePlayers);
               if (isfavouritedPlayer) {
                 const itemToBeRemovedIndex = newFavouritePlayers.indexOf(
-                  player.name
+                  player.name,
                 );
                 newFavouritePlayers.splice(itemToBeRemovedIndex, 1);
                 setFavouritePlayers(newFavouritePlayers);
