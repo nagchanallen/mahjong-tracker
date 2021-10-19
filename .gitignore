@@ -87,3 +87,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# Generated Favourite Players List
+favourite_players.txt
