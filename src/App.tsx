@@ -21,8 +21,13 @@ import './App.css';
 
 declare global {
   interface Window {
-    sw: any;
-    Base64: any;
+    sw: (gameStrings: string[]) => void;
+    Base64: {
+      tohex_table: string;
+      toescape: (c: number) => string;
+      unbase: (c: number) => string;
+      decode: (c: string) => string;
+    };
   }
 }
 
