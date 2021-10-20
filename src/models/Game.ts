@@ -1,10 +1,10 @@
 import { Player } from '../types/';
 
-interface gameData {
+type gameData = {
   link: string;
   time: string;
   gameName: string;
-}
+};
 
 export class Game {
   players: Player[] = [];
