@@ -10,7 +10,7 @@ import _ from 'lodash';
 import GameFilter from './components/GameFilter/GameFilter';
 import GameBoards from './components/GameBoards/GameBoards';
 
-// custom model
+// custom models
 import { Game } from './models/Game';
 
 // utils
@@ -18,6 +18,9 @@ import * as gameNameMap from './utils/maps';
 
 // style
 import './App.css';
+
+// types
+import { FilterOptions, PlayersWithTime } from './types';
 
 declare global {
   interface Window {
@@ -31,7 +34,6 @@ declare global {
   }
 }
 
-// TODO: add desktop notification
 const fetchGameData = () => {
   const gameDataTag = document.getElementById('gameData');
   const gameDataDecoderTag = document.getElementById('gameDataDecoder');
@@ -47,8 +49,9 @@ const App: React.FC = (): React.ReactElement => {
   const isFirstRendered = useRef<boolean>(true);
   const [gameList, setGameList] = useState<Game[]>(null);
   const [filteredGameList, setFilteredGameList] = useState<Game[]>(null);
+  const [notifiedPlayers, setNotifiedPlayers] = useState<PlayersWithTime[]>([]);
   const [favouritePlayers, setFavouritePlayers] = useState<string[]>([]);
-  const [filterOptions, setFilterOptions] = useState({
+  const [filterOptions, setFilterOptions] = useState<FilterOptions>({
     fourPlayer: true,
     threePlayer: true,
     tokutou: false,
@@ -67,22 +70,19 @@ const App: React.FC = (): React.ReactElement => {
   }, [gameList]);
 
   useEffect(() => {
-    if (gameList !== null) {
+    if (gameList) {
+      notifyFavouritePlayers();
       const filteredGameList = filterGames(gameList);
       setFilteredGameList(filteredGameList);
     }
   }, [gameList, filterOptions]);
 
-  useEffect(() => {
-    console.log(favouritePlayers);
-  }, [favouritePlayers]);
-
   const updateGameList = () => {
     fetchGameData();
-    getGameList();
+    makeGameList();
   };
 
-  const getGameList = () => {
+  const makeGameList = () => {
     window.sw = (gameStrings: string[]) => {
       const games = gameStrings.map((string) => {
         const gameData = string.split(',');
@@ -170,8 +170,57 @@ const App: React.FC = (): React.ReactElement => {
     return games;
   };
 
+  const notifyFavouritePlayers = () => {
+    const playersToNotify: string[] = [];
+    // clean up outdated notified player
+    const updatedNotifiedPlayers: PlayersWithTime[] = notifiedPlayers.filter(
+      (notifiedPlayer) => {
+        let isNotifiedPlayerInGameList = false;
+        gameList.forEach((game) => {
+          game.players.forEach((player) => {
+            isNotifiedPlayerInGameList ||=
+              player.name === notifiedPlayer.player &&
+              game.time === notifiedPlayer.time;
+          });
+        });
+        return isNotifiedPlayerInGameList;
+      },
+    );
+
+    // take players name that to be notified
+    gameList.forEach((game) => {
+      game.players.forEach((player) => {
+        const notifiedPlayerInd = _.findIndex(
+          updatedNotifiedPlayers,
+          (target) => {
+            return player.name === target.player;
+          },
+        );
+        if (notifiedPlayerInd === -1) {
+          const favouritePlayerInd = _.findIndex(favouritePlayers, (target) => {
+            return player.name === target;
+          });
+          if (favouritePlayerInd >= 0) {
+            playersToNotify.push(player.name + ' R' + player.rate);
+            updatedNotifiedPlayers.push({
+              player: player.name,
+              time: game.time,
+            });
+          }
+        }
+      });
+    });
+
+    setNotifiedPlayers(updatedNotifiedPlayers);
+
+    // send notification;
+    if (playersToNotify.length > 0) {
+      ipcRenderer.send('show-notification', playersToNotify);
+    }
+  };
+
   if (isFirstRendered.current) {
-    getGameList();
+    makeGameList();
     const fetchedFavoutitePlayers = ipcRenderer.sendSync(
       'get-favourite-players',
     );
@@ -202,18 +251,6 @@ const App: React.FC = (): React.ReactElement => {
         </div>
         <div className="col-5">
           <button onClick={updateGameList}>更新</button>
-          <button
-            onClick={() => {
-              ipcRenderer.send('show-notification', [
-                '東家 R1984',
-                '南家 R1916',
-                '西家 R2021',
-                '北家 R2327',
-              ]);
-            }}
-          >
-            Notify
-          </button>
         </div>
       </div>
       {filteredGameList ? (

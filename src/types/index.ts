@@ -12,3 +12,8 @@ export type FilterOptions = {
   houtou: boolean;
   hounan: boolean;
 };
+
+export type PlayersWithTime = {
+  player: string;
+  time: string;
+};
