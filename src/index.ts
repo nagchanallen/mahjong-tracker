@@ -61,7 +61,7 @@ app.on('activate', () => {
 const showNotification = (users: string[]) => {
   const notification = {
     title: '天鳳観戦情報',
-    body: users.join(' '),
+    body: users.join('\n'),
   };
   new Notification(notification).show();
 };

@@ -178,9 +178,10 @@ const App: React.FC = (): React.ReactElement => {
         let isNotifiedPlayerInGameList = false;
         gameList.forEach((game) => {
           game.players.forEach((player) => {
-            isNotifiedPlayerInGameList ||=
-              player.name === notifiedPlayer.player &&
-              game.time === notifiedPlayer.time;
+            isNotifiedPlayerInGameList =
+              isNotifiedPlayerInGameList ||
+              (player.name === notifiedPlayer.player &&
+                game.time === notifiedPlayer.time);
           });
         });
         return isNotifiedPlayerInGameList;
@@ -204,7 +205,13 @@ const App: React.FC = (): React.ReactElement => {
           });
           if (favouritePlayerInd >= 0) {
             playersToNotify.push(
-              game.time + ' ' + player.name + ' R' + player.rate + '\n',
+              game.time +
+                ' ' +
+                player.name +
+                ' ' +
+                player.dan +
+                ' R' +
+                player.rate,
             );
             updatedNotifiedPlayers.push({
               player: player.name,
