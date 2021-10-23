@@ -62,7 +62,7 @@ const App: React.FC = (): React.ReactElement => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      fetchGameData();
+      updateGameList();
     }, 60000);
     return () => {
       clearTimeout(timer);
@@ -187,6 +187,8 @@ const App: React.FC = (): React.ReactElement => {
       },
     );
 
+    console.log('updatedNotifiedPlayers(1): ', updatedNotifiedPlayers);
+
     // take players name that to be notified
     gameList.forEach((game) => {
       game.players.forEach((player) => {
@@ -201,7 +203,9 @@ const App: React.FC = (): React.ReactElement => {
             return player.name === target;
           });
           if (favouritePlayerInd >= 0) {
-            playersToNotify.push(player.name + ' R' + player.rate);
+            playersToNotify.push(
+              game.time + ' ' + player.name + ' R' + player.rate + '\n',
+            );
             updatedNotifiedPlayers.push({
               player: player.name,
               time: game.time,
@@ -211,7 +215,9 @@ const App: React.FC = (): React.ReactElement => {
       });
     });
 
+    console.log('updatedNotifiedPlayers(2): ', updatedNotifiedPlayers);
     setNotifiedPlayers(updatedNotifiedPlayers);
+    console.log(playersToNotify);
 
     // send notification;
     if (playersToNotify.length > 0) {
