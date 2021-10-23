@@ -188,43 +188,38 @@ const App: React.FC = (): React.ReactElement => {
       },
     );
 
-    console.log('updatedNotifiedPlayers(1): ', updatedNotifiedPlayers);
-
     // take players name that to be notified
     gameList.forEach((game) => {
       game.players.forEach((player) => {
         const notifiedPlayerInd = _.findIndex(
           updatedNotifiedPlayers,
           (target) => {
-            return player.name === target.player;
+            return player.name === target.player && game.time === target.time;
           },
         );
-        if (notifiedPlayerInd === -1) {
-          const favouritePlayerInd = _.findIndex(favouritePlayers, (target) => {
-            return player.name === target;
+        if (notifiedPlayerInd >= 0) return;
+        const favouritePlayerInd = _.findIndex(favouritePlayers, (target) => {
+          return player.name === target;
+        });
+        if (favouritePlayerInd >= 0) {
+          playersToNotify.push(
+            game.time +
+              ' ' +
+              player.name +
+              ' ' +
+              player.dan +
+              ' R' +
+              player.rate,
+          );
+          updatedNotifiedPlayers.push({
+            player: player.name,
+            time: game.time,
           });
-          if (favouritePlayerInd >= 0) {
-            playersToNotify.push(
-              game.time +
-                ' ' +
-                player.name +
-                ' ' +
-                player.dan +
-                ' R' +
-                player.rate,
-            );
-            updatedNotifiedPlayers.push({
-              player: player.name,
-              time: game.time,
-            });
-          }
         }
       });
     });
 
-    console.log('updatedNotifiedPlayers(2): ', updatedNotifiedPlayers);
     setNotifiedPlayers(updatedNotifiedPlayers);
-    console.log(playersToNotify);
 
     // send notification;
     if (playersToNotify.length > 0) {

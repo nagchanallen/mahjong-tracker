@@ -45,7 +45,6 @@ const GameBoard: React.FC<Props> = ({
             }`}
             key={player.name}
             onClick={() => {
-              console.log('HI');
               const isfavouritedPlayer = favouritePlayers.includes(player.name);
               const newFavouritePlayers = _.cloneDeep(favouritePlayers);
               if (isfavouritedPlayer) {
