@@ -10,11 +10,18 @@
 天鳳の対戦情報追跡用のクロスプラットフォームのデスクトップアプリです。  
 A cross-platform Electron desktop application for tracking Tenhou games.
 
-## 必要条件　Prerequisite　
+## 必要条件　 Prerequisite 　
+
 - [NodeJS](https://nodejs.org/en/) (v16+) has been installed.
 - [Yarn](https://yarnpkg.com/) has been installed.
 
-## セットアップ手順　Setup Procedures
+## セットアップ手順　 Setup Procedures
+
 1. clone the whole repo to your local directory.
 2. Run `yarn install`
 3. Run `yarn start`
+
+## アプリをビルドする　 Build the App
+
+1. Run `yarn install`
+2. Run `yarn make`
