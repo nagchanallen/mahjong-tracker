@@ -1,6 +1,6 @@
 import { Player } from '../types/';
 
-type gameData = {
+type GameDataInput = {
   link: string;
   time: string;
   gameName: string;
@@ -12,10 +12,10 @@ export class Game {
   time: string;
   gameName: string;
 
-  constructor(gameData: gameData) {
-    this.link = gameData.link;
-    this.time = gameData.time;
-    this.gameName = gameData.gameName;
+  constructor(gameDataInput: GameDataInput) {
+    this.link = gameDataInput.link;
+    this.time = gameDataInput.time;
+    this.gameName = gameDataInput.gameName;
   }
 
   addPlayer(playerObj: Player): void {
