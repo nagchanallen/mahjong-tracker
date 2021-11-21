@@ -1,6 +1,6 @@
 import React from 'react';
 import { ipcRenderer } from 'electron';
-import './GameBoard.css';
+import '../../../styles/GameBoard.css';
 import _ from 'lodash';
 import { Player, FilterOptions } from '../../../types';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import GameBoard from './GameBoard/GameBoard';
 import { Game } from '../../models/Game';
-import './GameBoards.css';
+import '../../styles/GameBoards.css';
 import { FilterOptions } from '../../types/index';
 
 interface Props {

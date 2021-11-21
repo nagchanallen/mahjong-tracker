@@ -1,6 +1,6 @@
 import React from 'react';
 import Checkbox from '../UI/Checkbox';
-import './GameFilter.css';
+import '../../styles/GameFilter.css';
 import { FilterOptions } from '../../types';
 
 interface Props {

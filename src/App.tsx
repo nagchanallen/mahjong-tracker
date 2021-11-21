@@ -17,7 +17,7 @@ import { Game } from './models/Game';
 import * as gameNameMap from './utils/maps';
 
 // style
-import './App.css';
+import './styles/App.css';
 
 // types
 import { FilterOptions, PlayersWithTime } from './types';
