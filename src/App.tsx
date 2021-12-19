@@ -203,13 +203,7 @@ const App: React.FC = (): React.ReactElement => {
         });
         if (favouritePlayerInd >= 0) {
           playersToNotify.push(
-            game.time +
-              ' ' +
-              player.name +
-              ' ' +
-              player.dan +
-              ' R' +
-              player.rate,
+            `${game.time} ${player.name} ${player.dan} R${player.rate}`,
           );
           updatedNotifiedPlayers.push({
             player: player.name,
