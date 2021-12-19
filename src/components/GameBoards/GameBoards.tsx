@@ -4,19 +4,19 @@ import { Game } from '../../models/Game';
 import '../../styles/GameBoards.css';
 import { FilterOptions } from '../../types/index';
 
-interface Props {
+interface GameBoardsProps {
   gameList: Game[];
   favouritePlayers: string[];
   setFavouritePlayers: React.Dispatch<React.SetStateAction<string[]>>;
   filterOptions: FilterOptions;
 }
 
-const GameBoards: React.FC<Props> = ({
+const GameBoards = ({
   gameList,
   filterOptions,
   favouritePlayers,
   setFavouritePlayers,
-}): React.ReactElement => {
+}: GameBoardsProps): React.ReactElement => {
   return (
     <div className="scrollable">
       {gameList.map(({ link, gameName, players, time }) => {

@@ -3,22 +3,22 @@ import Checkbox from '../UI/Checkbox';
 import '../../styles/GameFilter.css';
 import { FilterOptions } from '../../types';
 
-interface Props {
+interface GameFilterProps {
   filterOptions: FilterOptions;
   setFilterOptions: React.Dispatch<React.SetStateAction<FilterOptions>>;
 }
 
-const GameFilter: React.FC<Props> = ({
+const GameFilter = ({
   filterOptions,
   setFilterOptions,
-}): React.ReactElement => {
+}: GameFilterProps): React.ReactElement => {
   return (
     <div className="game-filter-box">
       <div>
         <Checkbox
           name="fourPlayer"
           label="四麻"
-          checked={filterOptions.fourPlayer}
+          isChecked={filterOptions.fourPlayer}
           onChange={() =>
             setFilterOptions({
               ...filterOptions,
@@ -29,7 +29,7 @@ const GameFilter: React.FC<Props> = ({
         <Checkbox
           name="threePlayer"
           label="三麻"
-          checked={filterOptions.threePlayer}
+          isChecked={filterOptions.threePlayer}
           onChange={() =>
             setFilterOptions({
               ...filterOptions,
@@ -42,7 +42,7 @@ const GameFilter: React.FC<Props> = ({
         <Checkbox
           name="tokutou"
           label="特東"
-          checked={filterOptions.tokutou}
+          isChecked={filterOptions.tokutou}
           onChange={() =>
             setFilterOptions({
               ...filterOptions,
@@ -53,7 +53,7 @@ const GameFilter: React.FC<Props> = ({
         <Checkbox
           name="tokunan"
           label="特南"
-          checked={filterOptions.tokunan}
+          isChecked={filterOptions.tokunan}
           onChange={() =>
             setFilterOptions({
               ...filterOptions,
@@ -64,7 +64,7 @@ const GameFilter: React.FC<Props> = ({
         <Checkbox
           name="houtou"
           label="鳳東"
-          checked={filterOptions.houtou}
+          isChecked={filterOptions.houtou}
           onChange={() =>
             setFilterOptions({
               ...filterOptions,
@@ -75,7 +75,7 @@ const GameFilter: React.FC<Props> = ({
         <Checkbox
           name="hounan"
           label="鳳南"
-          checked={filterOptions.hounan}
+          isChecked={filterOptions.hounan}
           onChange={() =>
             setFilterOptions({
               ...filterOptions,

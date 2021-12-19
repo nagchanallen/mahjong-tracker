@@ -4,7 +4,7 @@ import '../../../styles/GameBoard.css';
 import _ from 'lodash';
 import { Player, FilterOptions } from '../../../types';
 
-interface Props {
+interface GameBoardProps {
   gameName: string;
   link: string;
   time: string;
@@ -14,14 +14,14 @@ interface Props {
   filterOptions: FilterOptions;
 }
 
-const GameBoard: React.FC<Props> = ({
+const GameBoard = ({
   gameName,
   link,
   time,
   players,
   favouritePlayers,
   setFavouritePlayers,
-}): React.ReactElement => {
+}: GameBoardProps): React.ReactElement => {
   return (
     <div className="container border">
       <div className="row border">

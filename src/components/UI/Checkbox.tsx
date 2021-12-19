@@ -2,21 +2,26 @@ import React from 'react';
 interface CheckBoxProps {
   name: string;
   label: string;
-  checked: boolean;
+  isChecked: boolean;
   onChange: () => void;
 }
 
-const Checkbox: React.FC<CheckBoxProps> = (props): React.ReactElement => {
+const Checkbox = ({
+  name,
+  label,
+  isChecked,
+  onChange,
+}: CheckBoxProps): React.ReactElement => {
   return (
     <span>
       <input
         type="checkbox"
-        name={props.name}
-        id={`${props.name}-id`}
-        checked={props.checked}
-        onChange={props.onChange}
+        name={name}
+        id={`checkbox_${name}`}
+        checked={isChecked}
+        onChange={onChange}
       />
-      <label htmlFor={`${props.name}-id`}>{props.label}</label>
+      <label htmlFor={`checkbox_${name}`}>{label}</label>
     </span>
   );
 };
