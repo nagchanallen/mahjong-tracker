@@ -69,14 +69,14 @@ const showNotification = (users: string[]) => {
 const getFavouritePlayers = (): string[] => {
   try {
     const data = fs.readFileSync('favourite_players.txt', 'utf-8');
-    return data.split(' ');
+    return data.split('\n');
   } catch (err) {
     return [];
   }
 };
 
 const saveFavouritePlayers = (favouritePlayers: string[]): void => {
-  const data = favouritePlayers.join(' ');
+  const data = favouritePlayers.join('\n');
   try {
     fs.writeFileSync('favourite_players.txt', data);
   } catch (err) {
