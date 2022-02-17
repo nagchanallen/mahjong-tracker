@@ -2,7 +2,8 @@ import React from 'react';
 import { ipcRenderer } from 'electron';
 import '../../../styles/GameBoard.css';
 import _ from 'lodash';
-import { Player, FilterOptions } from '../../../types';
+import { Player } from '../../../models/Player';
+import { FilterOptions } from '../../../types';
 
 interface GameBoardProps {
   gameName: string;
