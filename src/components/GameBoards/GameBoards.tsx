@@ -19,7 +19,8 @@ const GameBoards = ({
 }: GameBoardsProps): React.ReactElement => {
   return (
     <div className="scrollable">
-      {gameList.map(({ link, gameName, players, time }) => {
+      {gameList.map(({ link, getGameTypeName, players, time }) => {
+        const gameName = getGameTypeName();
         return (
           <GameBoard
             favouritePlayers={favouritePlayers}

@@ -12,15 +12,13 @@ import GameBoards from './components/GameBoards/GameBoards';
 
 // custom models
 import { Game } from './models/Game';
-
-// utils
-import * as gameNameMap from './utils/maps';
+import { PlayerWithTime } from './models/Player';
 
 // style
 import './styles/App.css';
 
 // types
-import { FilterOptions, PlayersWithTime } from './types';
+import { FilterOptions } from './types';
 
 declare global {
   interface Window {
@@ -49,7 +47,7 @@ const App: React.FC = (): React.ReactElement => {
   const isFirstRendered = useRef<boolean>(true);
   const [gameList, setGameList] = useState<Game[]>(null);
   const [filteredGameList, setFilteredGameList] = useState<Game[]>(null);
-  const [notifiedPlayers, setNotifiedPlayers] = useState<PlayersWithTime[]>([]);
+  const [notifiedPlayers, setNotifiedPlayers] = useState<PlayerWithTime[]>([]);
   const [favouritePlayers, setFavouritePlayers] = useState<string[]>([]);
   const [filterOptions, setFilterOptions] = useState<FilterOptions>({
     fourPlayer: true,
@@ -84,87 +82,45 @@ const App: React.FC = (): React.ReactElement => {
 
   const makeGameList = () => {
     window.sw = (gameStrings: string[]) => {
-      const games = gameStrings.map((string) => {
-        const gameData = string.split(',');
-        const gameType = parseInt(gameData[3]);
-        // The code below has been modified from the original code which comes from tenhou official page. //
-        const gameName =
-          (gameType & 0x0010 ? '三' : '四') +
-          '般上特鳳若銀琥孔'.substr(
-            (gameNameMap.GT_ISJANS(gameType) ? 4 : 0) +
-              gameNameMap.GT_TAKU(gameType),
-            1,
-          ) +
-          (gameType & 0x0008 ? '南' : '東') +
-          (gameNameMap.GT_ISJANS(gameType)
-            ? '祝' + (~gameType & 0x0200 ? '0' : gameType & 0x0400 ? '5' : '2')
-            : (gameType & 0x0004 ? '' : '喰') +
-              (gameType & 0x0002 ? '' : '赤') +
-              (gameType & 0x0040 ? '速' : ''));
-        // The code above has been modified from the original code which comes from tenhou official page. //
-
-        const game = new Game({
-          link: gameData[0],
-          time: gameData[2],
-          gameName: gameName,
-        });
-
-        for (let i = 1; i <= 4; ++i) {
-          if (i === 4 && gameName[0] === '三') {
-            break;
-          }
-          const playerName = decodeURIComponent(
-            window.Base64.decode(gameData[3 * i + 1]),
-          );
-          const playerDan = gameNameMap.danMap[parseInt(gameData[3 * i + 2])];
-          const playerRate = Math.floor(parseInt(gameData[3 * i + 3]));
-          game.addPlayer({
-            name: playerName,
-            dan: playerDan,
-            rate: playerRate,
-          });
-        }
-
-        return game;
-      });
+      const games = gameStrings.map((e) => new Game(e));
       setGameList(games);
     };
   };
 
   const filterGames = (games: Game[]): Game[] => {
     if (!filterOptions.threePlayer) {
-      games = _.filter(games, ({ players }) => players.length !== 3);
+      games = _.filter(games, ({ isFourPlayer }) => isFourPlayer);
     }
 
     if (!filterOptions.fourPlayer) {
-      games = _.filter(games, ({ players }) => players.length !== 4);
+      games = _.filter(games, ({ isFourPlayer }) => !isFourPlayer);
     }
 
     if (!filterOptions.tokutou) {
       games = _.filter(
         games,
-        ({ gameName }) => gameName.slice(1, 3) !== '特東',
+        ({ level, isHanChan }) => level !== '特' || isHanChan,
       );
     }
 
     if (!filterOptions.tokunan) {
       games = _.filter(
         games,
-        ({ gameName }) => gameName.slice(1, 3) !== '特南',
+        ({ level, isHanChan }) => level !== '特' || !isHanChan,
       );
     }
 
     if (!filterOptions.houtou) {
       games = _.filter(
         games,
-        ({ gameName }) => gameName.slice(1, 3) !== '鳳東',
+        ({ level, isHanChan }) => level !== '鳳' || isHanChan,
       );
     }
 
     if (!filterOptions.hounan) {
       games = _.filter(
         games,
-        ({ gameName }) => gameName.slice(1, 3) !== '鳳南',
+        ({ level, isHanChan }) => level !== '鳳' || !isHanChan,
       );
     }
     return games;
@@ -173,14 +129,14 @@ const App: React.FC = (): React.ReactElement => {
   const notifyFavouritePlayers = () => {
     const playersToNotify: string[] = [];
     // clean up outdated notified player
-    const updatedNotifiedPlayers: PlayersWithTime[] = notifiedPlayers.filter(
+    const updatedNotifiedPlayers: PlayerWithTime[] = notifiedPlayers.filter(
       (notifiedPlayer) => {
         let isNotifiedPlayerInGameList = false;
         gameList.forEach((game) => {
           game.players.forEach((player) => {
             isNotifiedPlayerInGameList =
               isNotifiedPlayerInGameList ||
-              (player.name === notifiedPlayer.player &&
+              (player.name === notifiedPlayer.player.name &&
                 game.time === notifiedPlayer.time);
           });
         });
@@ -194,7 +150,9 @@ const App: React.FC = (): React.ReactElement => {
         const notifiedPlayerInd = _.findIndex(
           updatedNotifiedPlayers,
           (target) => {
-            return player.name === target.player && game.time === target.time;
+            return (
+              player.name === target.player.name && game.time === target.time
+            );
           },
         );
         if (notifiedPlayerInd >= 0) return;
@@ -206,7 +164,7 @@ const App: React.FC = (): React.ReactElement => {
             `${game.time} ${player.name} ${player.dan} R${player.rate}`,
           );
           updatedNotifiedPlayers.push({
-            player: player.name,
+            player: player,
             time: game.time,
           });
         }
