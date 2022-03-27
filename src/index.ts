@@ -1,6 +1,6 @@
-import { app, BrowserWindow } from 'electron';
-const fs = require('fs');
-const { Notification, ipcMain } = require('electron');
+import { app, BrowserWindow, Notification, ipcMain } from 'electron';
+import type IpcMain from 'electron';
+import fs from 'fs';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: never;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -84,19 +84,22 @@ const saveFavouritePlayers = (favouritePlayers: string[]): void => {
   }
 };
 
-ipcMain.on('get-favourite-players', (event: any) => {
+ipcMain.on('get-favourite-players', (event: IpcMain.IpcMainEvent) => {
   const favouritePlayers = getFavouritePlayers();
   event.returnValue = favouritePlayers;
 });
 
 ipcMain.on(
   'save-favourite-players',
-  (event: any, favouritePlayers: string[]) => {
+  (event: IpcMain.IpcMainEvent, favouritePlayers: string[]) => {
     // favouritePlayers.sort()
     saveFavouritePlayers(favouritePlayers);
   },
 );
 
-ipcMain.on('show-notification', (event: any, users: string[]) => {
-  showNotification(users);
-});
+ipcMain.on(
+  'show-notification',
+  (event: IpcMain.IpcMainEvent, users: string[]) => {
+    showNotification(users);
+  },
+);
