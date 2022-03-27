@@ -7,10 +7,6 @@ const GT_TAKU = (w: number): number => {
   return ((w & 0x0020) >> 4) | ((w & 0x0080) >> 7);
 };
 
-// const GT_ISDAN = (w: number): boolean => {
-//   return !(w & (0x0200 | 0x0400 | 0x0800));
-// };
-
 const GT_ISJANS = (w: number): boolean => {
   return (w & (0x0200 | 0x0400)) != 0;
 };
@@ -31,6 +27,9 @@ export class Game {
 
   constructor(gameString: string) {
     const gameData = gameString.split(',');
+
+    this.link = gameData[0];
+    this.time = gameData[2];
 
     const gameTypeHex = parseInt(gameData[3]);
     this.isFourPlayer = !(gameTypeHex & 0x0010);
