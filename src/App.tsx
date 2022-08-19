@@ -1,23 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// packages
 import React, { useEffect, useRef, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import { hot } from 'react-hot-loader';
 import { Helmet } from 'react-helmet';
 import _ from 'lodash';
 
-// components
 import GameFilter from './components/GameFilter/GameFilter';
 import GameBoards from './components/GameBoards/GameBoards';
 
-// custom models
 import { Game } from './models/Game';
 import { PlayerWithTime } from './models/Player';
 
-// style
 import './styles/App.css';
 
-// types
 import { FilterOptions } from './types';
 
 declare global {
@@ -173,7 +167,6 @@ const App: React.FC = (): React.ReactElement => {
 
     setNotifiedPlayers(updatedNotifiedPlayers);
 
-    // send notification;
     if (playersToNotify.length > 0) {
       ipcRenderer.send('show-notification', playersToNotify);
     }
