@@ -17,6 +17,7 @@ const createWindow = (): void => {
     width: 400,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
     },
   });
   mainWindow.removeMenu();
