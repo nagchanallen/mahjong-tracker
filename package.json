@@ -25,6 +25,9 @@
     "email": "nagisawags@gmail.com"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "config": {
     "forge": {
       "packagerConfig": {},
