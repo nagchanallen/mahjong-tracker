@@ -33,7 +33,7 @@ const fetchGameData = () => {
   const newGameDataTag = document.createElement('script');
   newGameDataTag.setAttribute('id', 'gameData');
   newGameDataTag.setAttribute('type', 'text/javascript');
-  newGameDataTag.setAttribute('src', 'https://mjv.jp/0/wg/0.js');
+  newGameDataTag.setAttribute('src', 'https://tenhou.net/0/wg/0.js');
   gameDataDecoderTag.parentNode.appendChild(newGameDataTag);
 };
 
@@ -191,7 +191,7 @@ const App: React.FC = (): React.ReactElement => {
         />
         <script
           id="gameData"
-          src="https://mjv.jp/0/wg/0.js"
+          src="https://tenhou.net/0/wg/0.js"
           type="text/javascript"
         />
       </Helmet>
